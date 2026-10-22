@@ -1,0 +1,16 @@
+ID;address;city;postalCode;country;traveller_ID
+83d2faab-2207-52c6-bbb4-9193e6b2e093;5 Avenue Anatole France;Paris;75007;France;a8fc086a-6ced-561a-98a9-9b41a13cb7ce
+c69b2c7d-c64d-5d96-ba37-06dc98da3bce;1-1 Marunouchi, Chiyoda-ku;Tokyo;100-0005;Japan;4abf118b-6d60-5060-bc70-eef2db40c528
+7a35ab40-cb20-54e7-b7f4-8ece95cad2f4;350 Fifth Avenue;New York;10118;United States;98d7337a-2911-5632-8e8a-4defc0a9e842
+eb39108f-9cf5-504d-93a4-09c53420f1a5;Sheikh Mohammed bin Rashid Blvd;Dubai;00000;United Arab Emirates;02c3e30e-ba57-5d55-90e6-b9db5e36fdc3
+27ccfe8b-616a-54e4-9c87-f149c39d32ef;10 Bayfront Avenue;Singapore;018956;Singapore;98d7337a-2911-5632-8e8a-4defc0a9e842
+6e0e7cb2-299a-57cc-b93d-365da8a53f6a;Great Russell Street;London;WC1B 3DG;United Kingdom;a8fc086a-6ced-561a-98a9-9b41a13cb7ce
+89bb2446-de86-5040-bf7c-bee5d34b88dc;Bennelong Point;Sydney;2000;Australia;cdcb4735-451f-5529-9e67-ed9de92411b4
+a0322394-9a41-536f-898f-b409aa8bf31e;999/99 Rama I Road;Bangkok;10330;Thailand;409f4527-8efe-5850-95f7-719b25a40d69
+015a7664-1e01-5700-a54e-a89b9a00adb9;Piazza del Colosseo 1;Rome;00184;Italy;cdcb4735-451f-5529-9e67-ed9de92411b4
+223711d8-f77c-5cf3-b9ed-3c566da2666d;Jl. Pantai Kuta;Bali;80361;Indonesia;5af42c9f-b02b-51d1-ad8a-1045c249f2c4
+629e41a8-2e4e-5dd7-a2cc-d91d57bd804b;99 Rue de Rivoli;Paris;75001;France;cdcb4735-451f-5529-9e67-ed9de92411b4
+56a3ef29-0b0e-59fc-8abf-9f27296a6cb1;2-1-1 Asakusa, Taito-ku;Tokyo;111-0032;Japan;409f4527-8efe-5850-95f7-719b25a40d69
+beb4975e-0100-568c-b172-544688069b41;1 Centre Street;New York;10007;United States;02c3e30e-ba57-5d55-90e6-b9db5e36fdc3
+8451e1d5-0d2a-540b-97ba-c71a772259d5;2 Orchard Road;Singapore;238801;Singapore;798991e2-1517-5c4a-a3cf-d0257315ee6e
+c11ff25b-7242-52a0-9924-d1b99b823729;Jl. Raya Ubud;Bali;80571;Indonesia;5af42c9f-b02b-51d1-ad8a-1045c249f2c4

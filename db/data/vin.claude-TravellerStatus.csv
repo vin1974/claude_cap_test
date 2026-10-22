@@ -1,4 +1,5 @@
-code,name,descr
-A,Active,Traveller is active
-I,Inactive,Traveller is inactive
-S,Suspended,Traveller is suspended
+code;name;descr
+A;Active;Active traveller
+I;Inactive;Inactive traveller
+S;Suspended;Suspended traveller
+P;Pending;Pending verification
