@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "click4me",
+            "database": "${workspaceFolder:my-cap-project}/db.sqlite"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

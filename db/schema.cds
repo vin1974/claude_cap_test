@@ -59,3 +59,21 @@ entity Vacations : cuid {
   endsAt      : DateTime;
   traveller   : Association to Travellers;
 }
+
+// Users and roles
+
+entity Roles : sap.common.CodeList {
+  key code : String(10); // e.g. ADMIN, TRAVELLER, AGENT
+}
+
+entity AppUsers : cuid, managed {
+  @mandatory
+  userName    : String(100);
+  @mandatory
+  email       : String(255);
+  fullName    : String(255);
+  role        : Association to Roles;
+  isActive    : Boolean default true;
+  lastLoginAt : DateTime;
+  traveller   : Association to Travellers; // optional: set if the user is a traveller
+}

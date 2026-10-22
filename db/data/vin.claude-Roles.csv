@@ -1,0 +1,4 @@
+code,name,descr
+ADMIN,Administrator,Full access to the application
+TRAVELLER,Traveller,Manages own trips and contacts
+AGENT,Agent,Travel agent supporting travellers
