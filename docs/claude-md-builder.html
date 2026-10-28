@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLAUDE.md Builder</title>
+<style>
+  :root {
+    --bg: #0d0f17;
+    --panel: #141826;
+    --field: #10131f;
+    --line: #232a3d;
+    --text: #e8eaf2;
+    --muted: #7d859c;
+    --accent: #f59e3b;
+    --accent-soft: rgba(245, 158, 59, .1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: Georgia, "Times New Roman", serif;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 22px 28px;
+    background: linear-gradient(180deg, #2a1c0c 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--accent);
+  }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .logo {
+    width: 54px; height: 54px; border-radius: 50%; border: 3px solid var(--accent);
+    display: grid; place-items: center; font-weight: 700; color: var(--accent); font-size: 18px;
+  }
+  .brand h1 { margin: 0; font-size: 24px; font-weight: 400; color: var(--accent); }
+  .brand p { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+  .badge {
+    background: var(--accent); color: #1a1205; padding: 8px 18px; border-radius: 999px;
+    font-size: 15px; white-space: nowrap;
+  }
+  nav {
+    display: flex; gap: 8px; overflow-x: auto; padding: 0 28px;
+    border-bottom: 1px solid var(--line);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  nav button {
+    background: none; border: 0; border-bottom: 3px solid transparent; color: var(--muted);
+    padding: 18px 22px; font: inherit; font-size: 17px; cursor: pointer; white-space: nowrap;
+  }
+  nav button:hover { color: var(--text); }
+  nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 28px 28px 60px; }
+  .hint {
+    background: var(--accent-soft); border: 1px solid #3a2a12; color: #f3cf9a;
+    border-radius: 8px; padding: 16px 20px; margin-bottom: 26px;
+  }
+  .section {
+    margin: 26px 0 14px; color: var(--muted); letter-spacing: .15em; font-size: 14px;
+    text-transform: uppercase; display: flex; align-items: center; gap: 14px;
+  }
+  .section::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  label { display: block; color: var(--muted); font-size: 15px; margin-bottom: 8px; }
+  input, select, textarea {
+    width: 100%; background: var(--field); border: 1px solid var(--line); color: var(--text);
+    border-radius: 8px; padding: 14px 18px; font: inherit; font-size: 16px;
+  }
+  textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  ::placeholder { color: #4b5368; }
+  .tab { display: none; }
+  .tab.active { display: block; }
+  pre {
+    background: var(--field); border: 1px solid var(--line); border-radius: 8px;
+    padding: 20px; white-space: pre-wrap; word-break: break-word;
+    font: 14px/1.6 ui-monospace, Menlo, monospace; min-height: 300px;
+  }
+  .actions { display: flex; gap: 12px; margin-top: 16px; font-family: system-ui, sans-serif; }
+  .actions button {
+    background: var(--accent); color: #1a1205; border: 0; border-radius: 8px;
+    padding: 12px 22px; font-size: 15px; cursor: pointer;
+  }
+  .actions button.ghost { background: none; color: var(--accent); border: 1px solid var(--accent); }
+  @media (max-width: 760px) { .g2, .g3 { grid-template-columns: 1fr; } header { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">VT</div>
+    <div>
+      <h1>Vacation &amp; Traveller Management</h1>
+      <p>SAP CAP · @sap/cds 10 · SQLite</p>
+    </div>
+  </div>
+  <span class="badge">CLAUDE.md</span>
+</header>
+
+<nav id="nav"></nav>
+
+<main>
+  <!-- Architecture -->
+  <section class="tab active" data-tab="Architecture">
+    <div class="hint">Define your project structure so Claude always places files in the right directory.</div>
+    <div class="section">Project info</div>
+    <div class="grid g2">
+      <div><label>Project name</label><input id="name" value="my-cap-project"></div>
+      <div><label>Runtime</label>
+        <select id="runtime">
+          <option>Local SQLite (cds watch)</option>
+          <option>Cloud Foundry</option>
+          <option>Kyma</option>
+        </select>
+      </div>
+    </div>
+    <div class="section">Directory mapping</div>
+    <div class="grid g2">
+      <div><label>db/ — database layer</label><input id="db" value="common.cds, schema.cds, data/, i18n/"></div>
+      <div><label>srv/ — service layer</label><input id="srv" value="" placeholder="not created yet"></div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div><label>app/ — UI layer</label><input id="app" value="" placeholder="not created yet"></div>
+      <div><label>Config files</label><input id="config" value="package.json, .vscode/tasks.json"></div>
+      <div><label>test/ — tests</label><input id="test" value="" placeholder="none yet"></div>
+    </div>
+    <div style="margin-top:16px"><label>Extra directories (comma-separated)</label>
+      <input id="extra" value="docs/ (data-model diagrams), .claude/commands/"></div>
+    <div style="margin-top:16px"><label>Architecture notes</label>
+      <textarea id="notes">Travellers is the aggregate root: it composes Contacts, Vacations and a single Destinations address; AppUsers optionally links to a Traveller.
+Code lists (AddressTypes, TravellerStatus, Roles) and their association types live in db/common.cds; business entities live in db/schema.cds.
+Travellers.modifiedAt is the @odata.etag.</textarea></div>
+  </section>
+
+  <!-- Code style -->
+  <section class="tab" data-tab="Code style">
+    <div class="hint">Conventions Claude should follow when writing code.</div>
+    <div class="grid g2">
+      <div><label>Namespace</label><input id="ns" value="vin.claude"></div>
+      <div><label>Code-list key style</label><input id="keystyle" value="Single-character codes (e.g. status defaults to 'A')"></div>
+    </div>
+    <div style="margin-top:16px"><label>Style rules (one per line)</label>
+      <textarea id="style">Every field/entity label uses @title: '{i18n>Key}' instead of literal text.
+Seed CSV files in db/data/ are named vin.claude-&lt;Entity&gt;.csv (code-list translations: vin.claude-&lt;CodeList&gt;_texts.csv).
+Commit messages follow Conventional Commits (feat:, chore:, refactor:).</textarea></div>
+  </section>
+
+  <!-- Libraries -->
+  <section class="tab" data-tab="Libraries">
+    <div class="hint">Approved dependencies — Claude should not add others without asking.</div>
+    <label>Libraries (one per line)</label>
+    <textarea id="libs">@sap/cds ^10.1.1
+@cap-js/sqlite ^3.1.2 (dev)</textarea>
+  </section>
+
+  <!-- Commands -->
+  <section class="tab" data-tab="Commands">
+    <div class="hint">Commands used to run and validate the project. package.json has no scripts, so use the cds CLI directly.</div>
+    <label>Commands (one per line, "command — description")</label>
+    <textarea id="cmds" style="min-height:180px">cds watch — run with live reload; auto-deploys db/ and CSV seed data
+cds compile db --to sql — validate the model compiles
+cds compile db --to edmx — validate the model compiles
+cds deploy --to sqlite:db.sqlite — rebuild the local SQLite file</textarea>
+    <div class="section">Slash commands</div>
+    <textarea id="slash">/cap-add-language &lt;code&gt; — generate db/i18n/i18n_&lt;code&gt;.properties from the English baseline
+/cap-lang-check — report missing/orphan/empty keys across i18n files
+/commit — Conventional Commits message, waits for confirmation, then pull --rebase and push</textarea>
+  </section>
+
+  <!-- Critical rules -->
+  <section class="tab" data-tab="Critical rules">
+    <div class="hint">Rules Claude must never break.</div>
+    <label>Critical rules (one per line)</label>
+    <textarea id="rules" style="min-height:180px">Add new code lists in db/common.cds, not db/schema.cds.
+When adding a {i18n>Key}, add it to all properties files (i18n, i18n_en, i18n_ko), keeping section comments and ordering consistent.
+Update docs/db-design.html and docs/cap-database-design.png when the data model changes meaningfully.</textarea>
+  </section>
+
+  <!-- Constraints -->
+  <section class="tab" data-tab="Constraints">
+    <div class="hint">Current limits of the project.</div>
+    <label>Constraints (one per line)</label>
+    <textarea id="constraints" style="min-height:160px">Data-model only: no srv/ or app/ folder yet.
+No tests and no lint/build scripts.
+db.sqlite* is a local artifact; do not treat it as source.</textarea>
+  </section>
+
+  <!-- Preview -->
+  <section class="tab" data-tab="Preview">
+    <div class="hint">Generated CLAUDE.md — copy it or download it into your project root.</div>
+    <pre id="out"></pre>
+    <div class="actions">
+      <button id="copy">Copy</button>
+      <button id="dl" class="ghost">Download CLAUDE.md</button>
+    </div>
+  </section>
+</main>
+
+<script>
+const tabs = [...document.querySelectorAll('.tab')];
+const nav = document.getElementById('nav');
+const $ = id => document.getElementById(id).value.trim();
+const lines = id => $(id).split('\n').map(s => s.trim()).filter(Boolean);
+const unescape = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+tabs.forEach((t, i) => {
+  const b = document.createElement('button');
+  b.textContent = t.dataset.tab;
+  if (i === 0) b.classList.add('active');
+  b.onclick = () => {
+    nav.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+    tabs.forEach(x => x.classList.toggle('active', x === t));
+    if (t.dataset.tab === 'Preview') render();
+  };
+  nav.appendChild(b);
+});
+
+function render() {
+  const bullets = id => lines(id).map(l => '- ' + unescape(l)).join('\n');
+  const dirs = [['db/', 'db'], ['srv/', 'srv'], ['app/', 'app'], ['test/', 'test']]
+    .filter(([, id]) => $(id)).map(([d, id]) => `- \`${d}\` — ${$(id)}`);
+  if ($('config')) dirs.push(`- Config: ${$('config')}`);
+  if ($('extra')) dirs.push(`- Extra: ${$('extra')}`);
+
+  const cmds = lines('cmds').map(l => {
+    const [c, ...d] = unescape(l).split(' — ');
+    return d.length ? `- \`${c}\` — ${d.join(' — ')}` : `- \`${c}\``;
+  }).join('\n');
+
+  const md = `# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Overview
+
+${$('name')} — SAP CAP project (${$('runtime')}).
+
+## Architecture
+
+${dirs.join('\n')}
+
+${bullets('notes')}
+
+## Code style
+
+- Namespace: \`${$('ns')}\`
+- Code-list keys: ${$('keystyle')}
+${bullets('style')}
+
+## Libraries
+
+${bullets('libs')}
+
+## Commands
+
+${cmds}
+
+${bullets('slash')}
+
+## Critical rules
+
+${bullets('rules')}
+
+## Constraints
+
+${bullets('constraints')}
+`;
+  document.getElementById('out').textContent = md;
+  return md;
+}
+
+document.getElementById('copy').onclick = e => {
+  navigator.clipboard.writeText(render());
+  e.target.textContent = 'Copied!';
+  setTimeout(() => e.target.textContent = 'Copy', 1500);
+};
+document.getElementById('dl').onclick = () => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([render()], { type: 'text/markdown' }));
+  a.download = 'CLAUDE.md';
+  a.click();
+};
+render();
+</script>
+</body>
+</html>
