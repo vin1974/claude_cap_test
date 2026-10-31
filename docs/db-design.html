@@ -21,7 +21,7 @@
   .stats b { color:var(--primary); }
   .stats .t { font-weight:800; font-size:22px; color:var(--primary); margin-bottom:4px; }
   .stats div.row { display:flex; justify-content:space-between; }
-  main { padding:30px 60px 10px; display:flex; justify-content:center; }
+  main { padding:100px 60px 10px; display:flex; justify-content:center; }
   #diagram { background:#fff; border:2px solid #cbd5e1; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.1);
              padding:20px; }
   .legend { display:flex; gap:32px; margin:20px 60px 30px; font-size:20px; }
@@ -41,24 +41,24 @@
 <body>
   <div class="stats">
     <div class="t">Model statistics</div>
-    <div class="row"><span>Total Entities</span><b>8</b></div>
-    <div class="row"><span>Code Lists</span><b>3</b></div>
-    <div class="row"><span>Total Fields</span><b>51</b></div>
+    <div class="row"><span>Total Entities</span><b>9</b></div>
+    <div class="row"><span>Code Lists</span><b>4</b></div>
+    <div class="row"><span>Total Fields</span><b>46</b></div>
     <div class="row"><span>Total Relationships</span><b>7</b></div>
-    <div class="row"><span>Generated</span><b>2026-10-24</b></div>
+    <div class="row"><span>Generated</span><b>2026-10-31</b></div>
   </div>
   <div class="badge"><div class="ribbon">TUTORIAL</div><div class="main">🎬 Anubhav Trainings</div><div class="sub">Claude Tutorials</div></div>
   <header><h1>VACATION &amp; TRAVELLER MANAGEMENT</h1><h2>SAP CAP Database Design</h2></header>
   <hr class="divider">
   <main><div id="diagram"><pre class="mermaid">
 erDiagram
-    Travellers ||--o{ Contacts : "composition: contacts"
-    Travellers ||--o| Destinations : "composition: address"
-    Travellers ||--o{ Vacations : "composition: vacations"
+    Travellers ||--o{ TravelledLocations : "composition: locations"
+    TravelledLocations }o..|| Destinations : "assoc: destination"
     Travellers }o..o| TravellerStatus : "assoc: status"
-    Contacts }o..o| AddressTypes : "assoc: type"
-    AppUsers }o..o| Roles : "assoc: role"
-    AppUsers }o..o| Travellers : "assoc: traveller (optional)"
+    Travellers }o..o| AddressTypes : "assoc: addressType"
+    Travellers }o..o| TravellerTypes : "assoc: type"
+    Users ||--o{ UserRoles : "composition: roles"
+    UserRoles }o..o| Roles : "assoc: role"
     AddressTypes {
         String code PK "String(1)"
         String name
@@ -69,6 +69,11 @@ erDiagram
         String name
         String descr
     }
+    TravellerTypes {
+        String code PK "String(2)"
+        String name
+        String descr
+    }
     Roles {
         String code PK "String(10)"
         String name
@@ -76,63 +81,55 @@ erDiagram
     }
     Travellers {
         UUID ID PK
-        String userName "mandatory"
-        String firstName
-        String lastName
-        String gender
-        Integer age
+        String firstName "mandatory"
+        String lastName "mandatory"
+        String email "mandatory, unique"
+        String phone
+        String addressType_code FK
+        String type_code FK "mandatory"
         String status_code FK "default A"
-        UUID address_ID FK
+        String userID "mandatory"
         DateTime createdAt
         String createdBy
         DateTime modifiedAt "etag"
         String modifiedBy
     }
-    Vacations {
+    TravelledLocations {
         UUID ID PK
-        String name
-        Decimal budget "10,2"
-        String currency_code FK
-        String description
-        DateTime startsAt
-        DateTime endsAt
-        UUID traveller_ID FK
-    }
-    Contacts {
-        UUID ID PK
-        String type_code FK
-        String address
-        UUID traveller_ID FK
+        UUID traveller_ID FK "mandatory"
+        UUID destination_ID FK "mandatory"
+        Date travelFrom "mandatory"
+        Date travelTo "mandatory"
+        LargeString notes
     }
     Destinations {
         UUID ID PK
-        String address
-        String city
-        String postalCode
-        String country
-        UUID traveller_ID FK
+        String name "mandatory, unique"
+        String country "mandatory"
+        String city "mandatory"
+        String region
+        LargeString description
     }
-    AppUsers {
+    Users {
         UUID ID PK
-        String userName "mandatory"
-        String email "mandatory"
-        String fullName
+        String loginName "mandatory, unique"
+        String firstName "mandatory"
+        String lastName "mandatory"
+        Boolean isLocked "default false"
+        Timestamp createdAt
+    }
+    UserRoles {
+        UUID ID PK
+        UUID user_ID FK
         String role_code FK
-        Boolean isActive "default true"
-        DateTime lastLoginAt
-        UUID traveller_ID FK "optional"
-        DateTime createdAt
-        String createdBy
-        DateTime modifiedAt
-        String modifiedBy
     }
   </pre></div></main>
   <div class="legend">
     <div class="box"><h3>Entity categories</h3>
-      <div class="item"><span class="sw" style="background:#bfdbfe"></span>Code lists (AddressTypes, TravellerStatus, Roles)</div>
-      <div class="item"><span class="sw" style="background:#bbf7d0"></span>Main entities (Travellers, Vacations)</div>
-      <div class="item"><span class="sw" style="background:#fef08a"></span>Supporting entities (Contacts, Destinations)</div>
-      <div class="item"><span class="sw" style="background:#e9d5ff"></span>User management (AppUsers)</div></div>
+      <div class="item"><span class="sw" style="background:#bfdbfe"></span>Code lists (AddressTypes, TravellerStatus, TravellerTypes, Roles)</div>
+      <div class="item"><span class="sw" style="background:#bbf7d0"></span>Main entities (Travellers, TravelledLocations)</div>
+      <div class="item"><span class="sw" style="background:#fef08a"></span>Supporting entities (Destinations master list)</div>
+      <div class="item"><span class="sw" style="background:#e9d5ff"></span>User management (Users, UserRoles)</div></div>
     <div class="box"><h3>Symbols</h3>
       <div class="item"><span class="tag">PK</span>Primary key</div>
       <div class="item"><span class="tag">FK</span>Foreign key (association target key)</div>
@@ -146,7 +143,7 @@ erDiagram
     <div class="m">ANUBHAV TRAININGS — CLAUDE TUTORIALS</div><div class="s">SAP CAP Database Design Tutorial Series</div></footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
 <script>
-  const COLORS = {"AddressTypes": "#bfdbfe", "TravellerStatus": "#bfdbfe", "Roles": "#bfdbfe", "Travellers": "#bbf7d0", "Vacations": "#bbf7d0", "Contacts": "#fef08a", "Destinations": "#fef08a", "AppUsers": "#e9d5ff"};
+  const COLORS = {"AddressTypes": "#bfdbfe", "TravellerStatus": "#bfdbfe", "TravellerTypes": "#bfdbfe", "Roles": "#bfdbfe", "Travellers": "#bbf7d0", "TravelledLocations": "#bbf7d0", "Destinations": "#fef08a", "Users": "#e9d5ff", "UserRoles": "#e9d5ff"};
   mermaid.initialize({ startOnLoad:false, theme:'base', er:{ useMaxWidth:false, fontSize:18, minEntityWidth:200, entityPadding:12 },
     themeVariables:{ fontFamily:"'Segoe UI',Arial,sans-serif", fontSize:'20px', lineColor:'#475569' } });
   mermaid.run({ querySelector:'.mermaid' }).then(() => {
