@@ -1,8 +1,57 @@
 {
   "dependencies": {
-    "@sap/cds": "^10.1.1"
+    "@cap-js-community/odata-v2-adapter": "^1.16.2",
+    "@cap-js/audit-logging": "^1.3.0",
+    "@cap-js/hana": "^3",
+    "@sap/cds": "^10.1.1",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^3.1.2"
+    "@cap-js/cds-test": "^1.0.2",
+    "@cap-js/sqlite": "^3.1.2",
+    "@sap/cds-dk": "^10",
+    "@sap/eslint-plugin-cds": "^4.2.5",
+    "jest": "^30.5.2"
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "[development]": {
+          "kind": "mocked",
+          "users": {
+            "admin": {
+              "password": "admin",
+              "roles": [
+                "Admin"
+              ]
+            },
+            "aarav.sharma": {
+              "password": "aarav",
+              "roles": [
+                "Traveller"
+              ]
+            },
+            "priya.nair": {
+              "password": "priya",
+              "roles": [
+                "Traveller"
+              ]
+            }
+          }
+        }
+      },
+      "[production]": {
+        "auth": {
+          "kind": "xsuaa"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "cds lint"
+  },
+  "jest": {
+    "testTimeout": 20000
   }
 }

@@ -1,11 +1,11 @@
-ID;userName;firstName;lastName;gender;age;status_code;createdBy;createdAt;modifiedAt
-98d7337a-2911-5632-8e8a-4defc0a9e842;aarav.sharma;Aarav;Sharma;male;34;A;admin@vinclaude.com;2026-01-12T09:15:00Z;2026-09-30T14:20:00Z
-798991e2-1517-5c4a-a3cf-d0257315ee6e;priya.nair;Priya;Nair;female;29;A;admin@vinclaude.com;2026-01-20T10:05:00Z;2026-10-02T08:45:00Z
-a8fc086a-6ced-561a-98a9-9b41a13cb7ce;emily.johnson;Emily;Johnson;female;41;A;admin@vinclaude.com;2026-02-03T16:30:00Z;2026-10-11T12:10:00Z
-95d2cf71-8ea3-5af1-aca6-9585a7396c04;michael.carter;Michael;Carter;male;52;I;admin@vinclaude.com;2026-02-14T11:00:00Z;2026-07-19T17:25:00Z
-cdcb4735-451f-5529-9e67-ed9de92411b4;sofia.rossi;Sofia;Rossi;female;38;A;admin@vinclaude.com;2026-03-01T08:40:00Z;2026-10-15T09:55:00Z
-5af42c9f-b02b-51d1-ad8a-1045c249f2c4;lukas.weber;Lukas;Weber;male;45;A;admin@vinclaude.com;2026-03-18T13:20:00Z;2026-09-22T15:05:00Z
-4abf118b-6d60-5060-bc70-eef2db40c528;hiroshi.tanaka;Hiroshi;Tanaka;male;58;A;admin@vinclaude.com;2026-04-07T07:50:00Z;2026-10-18T06:30:00Z
-409f4527-8efe-5850-95f7-719b25a40d69;mei.chen;Mei Lin;Chen;female;26;A;admin@vinclaude.com;2026-04-25T12:35:00Z;2026-10-09T10:15:00Z
-1c3c993e-01e2-57e5-ad76-1f7e474c3bd9;carlos.alvarez;Carlos;Alvarez;male;63;I;admin@vinclaude.com;2026-05-09T15:10:00Z;2026-08-03T11:40:00Z
-02c3e30e-ba57-5d55-90e6-b9db5e36fdc3;fatima.almansouri;Fatima;Al-Mansouri;female;33;A;admin@vinclaude.com;2026-06-02T09:00:00Z;2026-10-20T13:50:00Z
+ID;firstName;lastName;email;phone;addressType_code;type_code;status_code;userID;createdBy;createdAt;modifiedAt
+98d7337a-2911-5632-8e8a-4defc0a9e842;Aarav;Sharma;aarav.sharma@example.com;+91 98765 43210;O;FF;A;aarav.sharma;admin@vinclaude.com;2026-01-12T09:15:00Z;2026-09-30T14:20:00Z
+798991e2-1517-5c4a-a3cf-d0257315ee6e;Priya;Nair;priya.nair@example.com;+91 98450 12345;P;ST;A;priya.nair;admin@vinclaude.com;2026-01-20T10:05:00Z;2026-10-02T08:45:00Z
+a8fc086a-6ced-561a-98a9-9b41a13cb7ce;Emily;Johnson;emily.johnson@example.com;+1 212 555 0147;T;EX;A;emily.johnson;admin@vinclaude.com;2026-02-03T16:30:00Z;2026-10-11T12:10:00Z
+95d2cf71-8ea3-5af1-aca6-9585a7396c04;Michael;Carter;michael.carter@example.com;+1 415 555 0192;H;ST;I;michael.carter;admin@vinclaude.com;2026-02-14T11:00:00Z;2026-07-19T17:25:00Z
+cdcb4735-451f-5529-9e67-ed9de92411b4;Sofia;Rossi;sofia.rossi@example.com;+39 06 5550 1234;O;ST;A;sofia.rossi;admin@vinclaude.com;2026-03-01T08:40:00Z;2026-10-15T09:55:00Z
+5af42c9f-b02b-51d1-ad8a-1045c249f2c4;Lukas;Weber;lukas.weber@example.com;+49 30 5550 1789;P;FF;A;lukas.weber;admin@vinclaude.com;2026-03-18T13:20:00Z;2026-09-22T15:05:00Z
+4abf118b-6d60-5060-bc70-eef2db40c528;Hiroshi;Tanaka;hiroshi.tanaka@example.com;+81 3 5550 1122;T;EX;A;hiroshi.tanaka;admin@vinclaude.com;2026-04-07T07:50:00Z;2026-10-18T06:30:00Z
+409f4527-8efe-5850-95f7-719b25a40d69;Mei Lin;Chen;mei.chen@example.com;+86 21 5550 3344;H;ST;A;mei.chen;admin@vinclaude.com;2026-04-25T12:35:00Z;2026-10-09T10:15:00Z
+1c3c993e-01e2-57e5-ad76-1f7e474c3bd9;Carlos;Alvarez;carlos.alvarez@example.com;+34 91 555 0166;O;ST;I;carlos.alvarez;admin@vinclaude.com;2026-05-09T15:10:00Z;2026-08-03T11:40:00Z
+02c3e30e-ba57-5d55-90e6-b9db5e36fdc3;Fatima;Al-Mansouri;fatima.almansouri@example.com;+971 4 555 0188;P;EX;A;fatima.almansouri;admin@vinclaude.com;2026-06-02T09:00:00Z;2026-10-20T13:50:00Z

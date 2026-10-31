@@ -1,0 +1,38 @@
+### Section 9 $expand examples (local mock users). Status codes are single letters, e.g. 'A'.
+@catalog = http://localhost:4004/odata/v4/catalog
+@um = http://localhost:4004/odata/v4/user-management
+
+### Travellers with locations and destinations
+GET {{catalog}}/Travellers?$expand=locations($expand=destination)
+Authorization: Basic admin:admin
+
+### Select only specific fields
+GET {{catalog}}/Travellers?$select=ID,firstName,lastName,fullName,status_code&$expand=locations($select=travelFrom,travelTo,notes;$expand=destination($select=name,country,city))
+Authorization: Basic admin:admin
+
+### Active travellers with locations from 2026
+GET {{catalog}}/Travellers?$filter=status_code eq 'A'&$expand=locations($filter=travelFrom ge 2026-01-01)
+Authorization: Basic admin:admin
+
+### Own locations with destination
+GET {{catalog}}/TravelledLocations?$expand=destination($select=name,country,city,region)&$orderby=travelFrom desc
+Authorization: Basic aarav.sharma:aarav
+
+### Location with traveller and destination
+GET {{catalog}}/TravelledLocations?$top=1&$expand=traveller($select=firstName,lastName,fullName),destination
+Authorization: Basic admin:admin
+
+### Users with roles
+GET {{um}}/Users?$expand=roles($expand=role)
+Authorization: Basic admin:admin
+
+### Lock a user
+GET {{um}}/lockUser(userId=e5afc317-318d-5084-a335-28ff0fee11b1)
+Authorization: Basic admin:admin
+
+### Create a user
+POST {{um}}/createUser
+Authorization: Basic admin:admin
+Content-Type: application/json
+
+{ "firstName": "Ann", "lastName": "Lee", "email": "ann.lee@example.com", "roleId": "AGENT" }

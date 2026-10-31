@@ -2,72 +2,88 @@
  * Business entities for the Vacation & Traveller Management app.
  * Reusable code lists and types are defined in common.cds.
  */
-using { cuid, Currency, managed } from '@sap/cds/common';
-using { vin.claude.AddressType, vin.claude.Status, vin.claude.Role } from './common';
+using { cuid, managed } from '@sap/cds/common';
+using { vin.claude.AddressType, vin.claude.Status, vin.claude.Role, vin.claude.TravellerType } from './common';
 
 namespace vin.claude;
 
 // Main entities
 
-entity Destinations : cuid {
-  address    : String(255) @title: '{i18n>Address}';
-  city       : String(40)  @title: '{i18n>City}';
-  postalCode : String(8)   @title: '{i18n>PostalCode}';
-  country    : String(40)  @title: '{i18n>Country}';
-  traveller  : Association to Travellers @title: '{i18n>Traveller}';
-}
-
 entity Travellers : cuid, managed {
   @mandatory
-  userName  : String(255) @title: '{i18n>UserName}';
-  firstName : String(255) @title: '{i18n>FirstName}';
-  lastName  : String(255) @title: '{i18n>LastName}';
-  contacts  : Composition of many Contacts on contacts.traveller = $self @title: '{i18n>Contacts}';
-  gender    : String(10)  @title: '{i18n>Gender}';
-  age       : Integer     @title: '{i18n>Age}';
-  status    : Status default 'A' @title: '{i18n>Status}';
-  address   : Composition of Destinations @title: '{i18n>Address}';
-  vacations : Composition of many Vacations on vacations.traveller = $self @title: '{i18n>Vacations}';
+  firstName   : String(80)  @title: '{i18n>FirstName}';
+  @mandatory
+  lastName    : String(80)  @title: '{i18n>LastName}';
+  @mandatory
+  email       : String(120) @title: '{i18n>Email}';
+  phone       : String(20)  @title: '{i18n>Phone}';
+  addressType : AddressType @title: '{i18n>AddressType}';
+  @mandatory
+  type        : TravellerType @title: '{i18n>TravellerType}';
+  status      : Status default 'A' @title: '{i18n>Status}';
+  @mandatory
+  userID      : String(100) @title: '{i18n>UserID}'; // BTP user ID, row-level filter key
+  locations   : Composition of many TravelledLocations on locations.traveller = $self @title: '{i18n>Locations}';
 }
 
 annotate Travellers with {
   ID         @title: '{i18n>ID}';
   modifiedAt @odata.etag;
+};
+
+annotate Travellers with @assert.unique: { email: [email] };
+
+entity Destinations : cuid {
+  @mandatory
+  name        : String(200) @title: '{i18n>Name}';
+  @mandatory
+  country     : String(100) @title: '{i18n>Country}';
+  @mandatory
+  city        : String(100) @title: '{i18n>City}';
+  region      : String(100) @title: '{i18n>Region}';
+  description : LargeString @title: '{i18n>Description}';
 }
 
-entity Contacts : cuid {
-  type      : AddressType  @title: '{i18n>Type}';
-  address   : String(255)  @title: '{i18n>Address}';
-  traveller : Association to Travellers @title: '{i18n>Traveller}';
-}
+annotate Destinations with @assert.unique: { name: [name] };
 
-entity Vacations : cuid {
-  name        : String(255)  @title: '{i18n>Name}';
-  budget      : Decimal(10, 2) @title: '{i18n>Budget}';
-  currency    : Currency     @title: '{i18n>Currency}';
-  description : String(1024) @title: '{i18n>Description}';
-  startsAt    : DateTime     @title: '{i18n>StartsAt}';
-  endsAt      : DateTime     @title: '{i18n>EndsAt}';
+entity TravelledLocations : cuid {
+  @mandatory
   traveller   : Association to Travellers @title: '{i18n>Traveller}';
+  @mandatory
+  destination : Association to Destinations @title: '{i18n>Destination}';
+  @mandatory
+  travelFrom  : Date        @title: '{i18n>TravelFrom}';
+  @mandatory
+  travelTo    : Date        @title: '{i18n>TravelTo}';
+  notes       : LargeString @title: '{i18n>Notes}';
 }
 
-// Users
+// Users and role assignments
 
-entity AppUsers : cuid, managed {
+entity Users : cuid {
   @mandatory
-  userName    : String(100) @title: '{i18n>UserName}';
+  loginName : String(120) @title: '{i18n>LoginName}'; // BTP login / email
   @mandatory
-  email       : String(255) @title: '{i18n>Email}';
-  fullName    : String(255) @title: '{i18n>FullName}';
-  role        : Role        @title: '{i18n>Role}';
-  isActive    : Boolean default true @title: '{i18n>IsActive}';
-  lastLoginAt : DateTime    @title: '{i18n>LastLoginAt}';
-  traveller   : Association to Travellers @title: '{i18n>Traveller}'; // optional: set if the user is a traveller
+  firstName : String(80)  @title: '{i18n>FirstName}';
+  @mandatory
+  lastName  : String(80)  @title: '{i18n>LastName}';
+  isLocked  : Boolean default false @title: '{i18n>IsLocked}';
+  createdAt : Timestamp @cds.on.insert: $now @title: '{i18n>CreatedAt}';
+  roles     : Composition of many UserRoles on roles.user = $self @title: '{i18n>Roles}';
 }
+
+annotate Users with @assert.unique: { loginName: [loginName] };
+
+entity UserRoles : cuid {
+  user : Association to Users @title: '{i18n>User}';
+  role : Role                 @title: '{i18n>Role}';
+}
+
+annotate UserRoles with @assert.unique: { assignment: [user, role] };
 
 // ID titles for entities using cuid
 
-annotate Destinations with { ID @title: '{i18n>ID}'; };
-annotate Contacts     with { ID @title: '{i18n>ID}'; };
-annotate Vacations    with { ID @title: '{i18n>ID}'; };
-annotate AppUsers     with { ID @title: '{i18n>ID}'; };
+annotate Destinations         with { ID @title: '{i18n>ID}'; };
+annotate TravelledLocations   with { ID @title: '{i18n>ID}'; };
+annotate Users                with { ID @title: '{i18n>ID}'; };
+annotate UserRoles            with { ID @title: '{i18n>ID}'; };

@@ -1,0 +1,13 @@
+ID;loginName;firstName;lastName;isLocked;createdAt
+e5afc317-318d-5084-a335-28ff0fee11b1;rajesh.menon@example.com;Rajesh;Menon;false;2026-01-05T09:00:00Z
+88baf6f8-196f-5bb4-bcb9-0a1c5ba299ca;karen.whitfield@example.com;Karen;Whitfield;false;2026-01-05T09:10:00Z
+66567f6e-ab0e-57cb-bb24-477343d15220;elena.petrova@example.com;Elena;Petrova;false;2026-01-08T10:00:00Z
+4ffda8a1-cb31-59b0-b1e2-3e9c7a81bd84;daniel.okafor@example.com;Daniel;Okafor;true;2026-01-08T10:15:00Z
+16b4d08f-a7d5-5504-ac6c-1621e2899cbb;yuki.matsumoto@example.com;Yuki;Matsumoto;false;2026-01-09T08:30:00Z
+eb834aaf-861b-55ae-9b6c-06031881d01b;aarav.sharma@example.com;Aarav;Sharma;false;2026-01-12T09:20:00Z
+d1fdebb4-f8ab-50cb-a7d7-d9c2283d4756;priya.nair@example.com;Priya;Nair;false;2026-01-20T10:10:00Z
+2f328931-0c4d-578f-b942-61d405d275ad;emily.johnson@example.com;Emily;Johnson;false;2026-02-03T16:35:00Z
+a6edc0ba-2f4c-517a-b65a-d33d7004246d;sofia.rossi@example.com;Sofia;Rossi;false;2026-03-01T08:45:00Z
+0912f66d-4395-5647-9b84-697d422eeef1;hiroshi.tanaka@example.com;Hiroshi;Tanaka;false;2026-04-07T07:55:00Z
+29daa978-ff3a-569c-925f-3d05834c51ea;mei.chen@example.com;Mei Lin;Chen;true;2026-04-25T12:40:00Z
+1d41f148-284b-5772-af81-a0a37b3c25e2;fatima.almansouri@example.com;Fatima;Al-Mansouri;false;2026-06-02T09:05:00Z
